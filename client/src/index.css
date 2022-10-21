@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* jackson's additions */
+
+body {
+  background-color: #7395ae;
+  color: #25037b;
+}
+
+
+.AccountCreation{
+  flex: 1;
+  flexDirection: "column";
+  justifyContent: "center";
+  alignItems: "center";
+}
+
+NavLink {
+  margin: 20px;
+}
+
+
+.navbar{
+  background-color: #557a95;
+  height: 40px;
+}
+a {
+  margin: 20px;
+  color: #25037b;
+  font-size: 15px;
+  position: relative;
+  top: 25%;
+  bottom: 25%;
+}
+/* chessboard */
+
