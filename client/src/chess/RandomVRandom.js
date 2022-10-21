@@ -6,6 +6,7 @@ function RandomVRandom(){
     const [chess, setChess] = useState(new Chess())
     const [FEN, setFEN] = useState(chess.fen())
     const [PlayPause, setPlayPause] = useState(false);
+    const [inProgress, setInProgress] = useState(true);
 
 
     // random game code from chess.js readme
@@ -26,11 +27,26 @@ function RandomVRandom(){
       }, 1000);
 
     useEffect(() => {
-        return () => timedRandomMove
+        if (!chess.isGameOver()){
+            return () => timedRandomMove
+        } else {
+            setInProgress(false);
+        }
     }, [FEN])
 
     function handlePlayPauseClick(){
         setPlayPause(!PlayPause);
+    }
+
+    let winner;
+    function gameOverMessage(){
+        if (winner == "b"){
+            return "Game over! Black wins!"
+        } else if (winner == "w"){
+            return "Game over! White wins!"
+        } else if (winner == "d"){
+            return "It's a draw!"
+        }
     }
 
     return (
@@ -38,6 +54,7 @@ function RandomVRandom(){
             <h1>Random vs. Random</h1>
             <Chessboard position={FEN}/>
             <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
+            {!inProgress ? <p>{gameOverMessage()}</p> : null}
             <p>
                 Watch the computer play against itself with both sides making totally random moves!
                 Play and pause the action using the button above.

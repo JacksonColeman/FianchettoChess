@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authorize, only: :create
+    skip_before_action :authorize, only: [:create, :destroy]
     # GET /users 
     def index
         users = User.all;
@@ -16,6 +16,12 @@ class UsersController < ApplicationController
         # byebug
         session[:user_id] = user.id
         render json: user, status: :created
+    end
+
+    def destroy
+        user = User.find(params[:id])
+        user.delete
+        head :no_content
     end
 
     private

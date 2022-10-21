@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-    skip_before_action :authorize, only: [:index, :create]
+    skip_before_action :authorize, only: [:index, :create, :destroy]
     # GET /games and # GET /users/:id/games
     def index
         ## if nested route
@@ -21,6 +21,12 @@ class GamesController < ApplicationController
     def create
         game = Game.create(game_params)
         render json: game, status: :created
+    end
+
+    def destroy
+        game = Game.find(params[:id])
+        game.delete
+        head :no_content
     end
 
     private

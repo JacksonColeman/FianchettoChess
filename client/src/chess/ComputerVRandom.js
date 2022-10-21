@@ -7,6 +7,7 @@ function ComputerVRandom(){
     const [chess, setChess] = useState(new Chess())
     const [FEN, setFEN] = useState(chess.fen())
     const [PlayPause, setPlayPause] = useState(false);
+    const [inProgress, setInProgress] = useState(true);
 
     function makeMinimaxMove(game, depth, white){
         const minimaxMove = MINIMAX(game, depth, white)[1];
@@ -34,11 +35,26 @@ function ComputerVRandom(){
       }, 1000);
 
     useEffect(() => {
-        return () => timedMove
+        if (!chess.isGameOver()){
+            return () => timedMove
+        } else {
+            setInProgress(false);
+        }
     }, [FEN])
 
     function handlePlayPauseClick(){
         setPlayPause(!PlayPause);
+    }
+
+    let winner;
+    function gameOverMessage(){
+        if (winner == "b"){
+            return "Game over! Black wins!"
+        } else if (winner == "w"){
+            return "Game over! White wins!"
+        } else if (winner == "d"){
+            return "It's a draw!"
+        }
     }
 
   return(
@@ -46,6 +62,7 @@ function ComputerVRandom(){
         <h1>Computer vs. Random</h1>
         <Chessboard position={FEN}/>
         <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
+        {inProgress ? null : <p>{gameOverMessage()}</p>}
         <p>In this demonstration, an intelligent chess computer is playing as the white pieces, while the
             black pieces are moved at random. Enjoy!
         </p>

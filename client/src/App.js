@@ -31,7 +31,7 @@ function App() {
           </div>}
         />
 
-        <Route path = '/account' element = {<AccountPage user={user} setUser={setUser}/>
+        <Route path = '/account/*' element = {<AccountPage user={user} setUser={setUser}/>
         } />
 
         <Route path = '/randvsrand' element = {<RandomVRandom/>}/>
