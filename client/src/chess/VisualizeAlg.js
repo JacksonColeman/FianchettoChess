@@ -1,14 +1,98 @@
-import { MINIMAX, MINIMAX_ALPHA_BETA } from "./Minimax";
+import { EVALUATE_POSITION, GENERATE_MOVES, UPDATE_POSITION } from "./Minimax";
 import {Chess} from "chess.js";
 import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
+import TreeVisualizer from "./TreeVisualizer";
 
-function UserVComputer({user, userColor, difficulty}){
+function VisualizeAlg({user}){
     const [chess, setChess] = useState(new Chess())
     const [FEN, setFEN] = useState(chess.fen())
     const [inProgress, setInProgress] = useState(true);
     const [winner, setWinner] = useState(null)
     const [submittedGame, setSubmittedGame] = useState(false)
+    
+    const [initialPosition, setInitialPosition] = useState("");
+    const [position_tree, setPositionTree] = useState({});
+
+    // ALG
+
+
+
+    function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
+
+        if (depth == 3){
+            setInitialPosition(game.ascii());
+        }
+
+        if (depth == 0){   
+            return [EVALUATE_POSITION(game), null]
+        }
+    
+        else if (white_turn){
+            let bestVal = -Infinity;
+            let bestMove = null;
+            let moves = GENERATE_MOVES(game);
+            for (let m in moves){
+                let newPos = UPDATE_POSITION(game, moves[m]);
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
+
+                if (!position_tree[game.ascii()]){
+                    position_tree[game.ascii()] = [];
+                }
+                position_tree[game.ascii()].push(newPos.ascii())
+                //viz
+
+                if (value > bestVal){
+                    bestVal = value;
+                    bestMove = moves[m]
+                }
+                alpha = Math.max(alpha, bestVal)
+    
+                if (beta <= alpha){
+                    console.log(`beta (${beta}) <= alpha (${alpha})`)
+                    break;
+                }
+            }
+            return [bestVal, bestMove];
+        }
+    
+        else if (white_turn == false){
+            let bestVal = Infinity;
+            let bestMove = null;
+            let moves = GENERATE_MOVES(game);
+            for (let m in moves){
+                let newPos = UPDATE_POSITION(game, moves[m]);
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
+
+                // viz
+                if (!position_tree[game.ascii()]){
+                    position_tree[game.ascii()] = [];
+                }
+                position_tree[game.ascii()].push(newPos.ascii())
+                //viz
+
+                if (value < bestVal){
+                    bestVal = value;
+                    bestMove = moves[m]
+                }
+                beta = Math.min(beta, bestVal)
+    
+                if (beta <= alpha){
+                    console.log(`beta (${beta}) <= alpha (${alpha})`)
+                    break;
+                }
+            }
+            return [bestVal, bestMove];
+        }
+    
+    }
+
+
+
+
+    // ALG
+
+    const userColor = "w";
 
     // user color as full string ("white/black")
     let userColorFull
@@ -26,27 +110,7 @@ function UserVComputer({user, userColor, difficulty}){
     }
 
     // set computer depth based on difficulty
-    let cpudepth;
-    switch(difficulty){
-        case "easy":
-            cpudepth = 1;
-            break;
-        case "medium":
-            cpudepth = 2;
-            break;
-        case "hard":
-            cpudepth = 4;
-            break;
-    }
-
-    function makeMinimaxMove(game, depth, white){
-        if (!game.isGameOver()) {
-            const minimaxMove = MINIMAX(game, depth, white)[1];
-            console.log(minimaxMove)
-            game.move(minimaxMove)
-            setFEN(game.fen())
-        }
-    }
+    let cpudepth = 3;
 
     function makeMinimaxABMove(game, depth, white){
         if (!game.isGameOver()) {
@@ -56,15 +120,6 @@ function UserVComputer({user, userColor, difficulty}){
         }
     }
 
-    function randomMove(){
-        if (!chess.isGameOver()) {
-            const moves = chess.moves()
-            const move = moves[Math.floor(Math.random() * moves.length)]
-            console.log(move);
-            chess.move(move)
-            setFEN(chess.fen())
-        }
-    }
 
     const timedMove = setTimeout(() => {
         if (chess.turn()!=userColor){
@@ -147,32 +202,25 @@ function UserVComputer({user, userColor, difficulty}){
 
         setSubmittedGame(true);
     }
-        
-
+        debugger;
 
   return(
     <div>
         <h1>Play vs. Computer</h1>
-        <h2>Opponent: Computer, Difficulty: {difficulty}</h2>
+        <h2>Opponent: Computer </h2>
         <Chessboard position={FEN} onPieceDrop={onDrop} boardOrientation={userColorFull}/>
         {user ? <h2>Playing as: {user.username}</h2> : <h2>Playing as Guest</h2>}
         {inProgress ? null 
         : 
             <div>
                 <p>{gameOverMessage()}</p>
-                {submittedGame ? 
-                    <p>Game Saved To Profile!</p>
-                    :
-                    <button onClick={saveGameClick}>Save Game To Profile</button>
-                } 
             </div>
                
         }
-        <p>
-            Can you beat the computer?
-        </p>
+        <h1>ALGORITHM VISUALIZATION</h1>
+        <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition}/>
     </div>
   )
 }
 
-export default UserVComputer;
+export default VisualizeAlg;

@@ -39,10 +39,10 @@ export function MINIMAX(game, depth, white_turn){
     return output;
 }
 
+let totalCalls = 0;
 export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
-    console.log("Running Minimax A-B at depth " + depth)
     if (depth == 0){   
-        return [EVALUATE_POSITION(game) + Math.random() - 0.5, null]
+        return [EVALUATE_POSITION(game), null]
     }
 
     else if (white_turn){
@@ -58,7 +58,10 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
             }
             alpha = Math.max(alpha, bestVal)
 
+            debugger;
+
             if (beta <= alpha){
+                console.log(`beta (${beta}) <= alpha (${alpha})`)
                 break;
             }
         }
@@ -71,14 +74,15 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let moves = GENERATE_MOVES(game);
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
-            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta);
+            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
             if (value < bestVal){
                 bestVal = value;
                 bestMove = moves[m]
             }
-            beta = Math.min(alpha, bestVal)
+            beta = Math.min(beta, bestVal)
 
             if (beta <= alpha){
+                console.log(`beta (${beta}) <= alpha (${alpha})`)
                 break;
             }
         }
@@ -87,7 +91,7 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
 
 }
 
-function GENERATE_MOVES(game){
+export function GENERATE_MOVES(game){
     // get moves
     let moves = game.moves({verbose:true});
     return moves;
@@ -99,9 +103,9 @@ export function EVALUATE_POSITION(Game){
         return 0;
     } else if (Game.isCheckmate()){
         if (Game.turn() == "b"){
-            return Infinity;
+            return 100000;
         } else {
-            return -Infinity;
+            return -100000;
         }
     }
 
@@ -127,7 +131,7 @@ export function EVALUATE_POSITION(Game){
     return output;
 }
 
-function UPDATE_POSITION(game, move){
+export function UPDATE_POSITION(game, move){
     let gameCopy = new Chess(game.fen())
     gameCopy.move(move);
     return gameCopy;

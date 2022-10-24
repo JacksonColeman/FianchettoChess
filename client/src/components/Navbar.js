@@ -10,6 +10,7 @@ export default function Navbar ({user}) {
             <NavLink to="/compvscomp"> Watch Computer vs. Computer </NavLink>
             <NavLink to="/compvsrand"> Watch Computer vs. Random </NavLink>
             <NavLink to="/randvsrand"> Watch Random vs. Random </NavLink>
+            <NavLink to="/visualize"> Visualize The CPU Algorithm</NavLink>
             {/* <NavLink to="/signup"> Sign Up </NavLink> */}
             
             {user ? <NavLink to="/account"> View Account </NavLink> : 

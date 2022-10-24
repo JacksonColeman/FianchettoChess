@@ -11,6 +11,7 @@ import ComputerVComputer from "./chess/ComputerVComputer";
 import ComputerVRandom from "./chess/ComputerVRandom";
 import InitUserGame from "./chess/InitUserGame";
 import AccountPage from "./components/AccountPage";
+import VisualizeAlg from "./chess/VisualizeAlg";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -35,6 +36,8 @@ function App() {
         } />
 
         <Route path = '/randvsrand' element = {<RandomVRandom/>}/>
+
+        <Route path = '/visualize' element = {<VisualizeAlg user={user}/>}/>
 
         <Route path = '/about' element = {<AboutPage/>}/>
 
