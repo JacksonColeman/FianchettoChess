@@ -29,10 +29,10 @@ function UserVComputer({user, userColor, difficulty}){
     let cpudepth;
     switch(difficulty){
         case "easy":
-            cpudepth = 1;
+            cpudepth = 2;
             break;
         case "medium":
-            cpudepth = 2;
+            cpudepth = 3;
             break;
         case "hard":
             cpudepth = 4;

@@ -9,8 +9,6 @@ export const pieceValue = {
     "q": 900
 }
 
-let POSITIONS_HASH = {};
-
 export function MINIMAX(game, depth, white_turn){
     let moves = GENERATE_MOVES(game);
     let moveValues = [];
@@ -51,6 +49,7 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let moves = GENERATE_MOVES(game);
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
+            
             let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
             if (value > bestVal){
                 bestVal = value;
