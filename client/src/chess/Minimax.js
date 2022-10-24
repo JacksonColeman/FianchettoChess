@@ -39,6 +39,54 @@ export function MINIMAX(game, depth, white_turn){
     return output;
 }
 
+export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
+    console.log("Running Minimax A-B at depth " + depth)
+    if (depth == 0){   
+        return [EVALUATE_POSITION(game) + Math.random() - 0.5, null]
+    }
+
+    else if (white_turn){
+        let bestVal = -Infinity;
+        let bestMove = null;
+        let moves = GENERATE_MOVES(game);
+        for (let m in moves){
+            let newPos = UPDATE_POSITION(game, moves[m]);
+            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
+            if (value > bestVal){
+                bestVal = value;
+                bestMove = moves[m]
+            }
+            alpha = Math.max(alpha, bestVal)
+
+            if (beta <= alpha){
+                break;
+            }
+        }
+        return [bestVal, bestMove];
+    }
+
+    else if (white_turn == false){
+        let bestVal = Infinity;
+        let bestMove = null;
+        let moves = GENERATE_MOVES(game);
+        for (let m in moves){
+            let newPos = UPDATE_POSITION(game, moves[m]);
+            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta);
+            if (value < bestVal){
+                bestVal = value;
+                bestMove = moves[m]
+            }
+            beta = Math.min(alpha, bestVal)
+
+            if (beta <= alpha){
+                break;
+            }
+        }
+        return [bestVal, bestMove];
+    }
+
+}
+
 function GENERATE_MOVES(game){
     // get moves
     let moves = game.moves({verbose:true});

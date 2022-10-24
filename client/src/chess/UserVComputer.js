@@ -1,4 +1,4 @@
-import { MINIMAX } from "./Minimax";
+import { MINIMAX, MINIMAX_ALPHA_BETA } from "./Minimax";
 import {Chess} from "chess.js";
 import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
@@ -32,10 +32,10 @@ function UserVComputer({user, userColor, difficulty}){
             cpudepth = 1;
             break;
         case "medium":
-            cpudepth = 3;
+            cpudepth = 2;
             break;
         case "hard":
-            cpudepth = 4;
+            cpudepth = 3;
             break;
     }
 
@@ -44,6 +44,16 @@ function UserVComputer({user, userColor, difficulty}){
             const minimaxMove = MINIMAX(game, depth, white)[1];
             console.log(minimaxMove)
             game.move(minimaxMove)
+            setFEN(game.fen())
+        }
+    }
+
+    function makeMinimaxABMove(game, depth, white){
+        console.log("making minimax alpha-beta move")
+        if (!game.isGameOver()) {
+            const minimaxABMove = MINIMAX_ALPHA_BETA(game, depth, white, -Infinity, Infinity)[1];
+            console.log(minimaxABMove)
+            game.move(minimaxABMove)
             setFEN(game.fen())
         }
     }
@@ -60,7 +70,7 @@ function UserVComputer({user, userColor, difficulty}){
 
     const timedMove = setTimeout(() => {
         if (chess.turn()!=userColor){
-            makeMinimaxMove(chess, cpudepth, chess.turn()=="w")
+            makeMinimaxABMove(chess, cpudepth, chess.turn()=="w")
         } 
       }, 1000);
 
