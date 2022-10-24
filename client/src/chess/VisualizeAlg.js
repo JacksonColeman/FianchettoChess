@@ -11,7 +11,7 @@ function VisualizeAlg({user}){
     const [winner, setWinner] = useState(null)
     const [submittedGame, setSubmittedGame] = useState(false)
     
-    const [initialPosition, setInitialPosition] = useState("");
+    const [initialPosition, setInitialPosition] = useState([]);
     const [position_tree, setPositionTree] = useState({});
 
     // ALG
@@ -19,10 +19,8 @@ function VisualizeAlg({user}){
 
 
     function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
+        // reset position tree upon new initial call
 
-        if (depth == 3){
-            setInitialPosition(game.ascii());
-        }
 
         if (depth == 0){   
             return [EVALUATE_POSITION(game), null]
@@ -39,7 +37,7 @@ function VisualizeAlg({user}){
                 if (!position_tree[game.ascii()]){
                     position_tree[game.ascii()] = [];
                 }
-                position_tree[game.ascii()].push(newPos.ascii())
+                position_tree[game.ascii()].push([newPos.ascii(), value])
                 //viz
 
                 if (value > bestVal){
@@ -52,6 +50,9 @@ function VisualizeAlg({user}){
                     console.log(`beta (${beta}) <= alpha (${alpha})`)
                     break;
                 }
+            }
+            if (depth == 3){
+                setInitialPosition([game.ascii(), bestVal]);
             }
             return [bestVal, bestMove];
         }
@@ -68,7 +69,9 @@ function VisualizeAlg({user}){
                 if (!position_tree[game.ascii()]){
                     position_tree[game.ascii()] = [];
                 }
-                position_tree[game.ascii()].push(newPos.ascii())
+                position_tree[game.ascii()].push([newPos.ascii(), value])
+
+                
                 //viz
 
                 if (value < bestVal){
@@ -82,6 +85,11 @@ function VisualizeAlg({user}){
                     break;
                 }
             }
+
+            if (depth == 3){
+                setInitialPosition([game.ascii(), bestVal]);
+            }
+
             return [bestVal, bestMove];
         }
     

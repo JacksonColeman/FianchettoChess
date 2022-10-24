@@ -103,9 +103,9 @@ export function EVALUATE_POSITION(Game){
         return 0;
     } else if (Game.isCheckmate()){
         if (Game.turn() == "b"){
-            return 100000;
+            return Infinity;
         } else {
-            return -100000;
+            return -Infinity;
         }
     }
 
