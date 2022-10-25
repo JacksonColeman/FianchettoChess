@@ -1,4 +1,4 @@
-import { EVALUATE_POSITION, GENERATE_MOVES, UPDATE_POSITION } from "./Minimax";
+import { EVALUATE_POSITION, GENERATE_MOVES, UPDATE_POSITION, MOVE_COMPARE } from "./Minimax";
 import {Chess} from "chess.js";
 import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
@@ -12,6 +12,9 @@ function VisualizeAlg(){
     
     const [initialPosition, setInitialPosition] = useState([]);
     const [position_tree, setPositionTree] = useState({});
+    const [thinking, setThinking] = useState("");
+
+    const mc = MOVE_COMPARE;
 
     // ALG
 
@@ -24,33 +27,38 @@ function VisualizeAlg(){
             let bestVal = -Infinity;
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
+
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
-                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0] + Math.random() - 0.5;
-
-                if (!position_tree[game.ascii()]){
-                    position_tree[game.ascii()] = [];
-                }
-                position_tree[game.ascii()].push([newPos.ascii(), value])
-                //viz
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
 
                 if (value > bestVal){
                     bestVal = value;
                     bestMove = moves[m]
                 }
                 alpha = Math.max(alpha, bestVal)
+
+                if (!position_tree[game.ascii()]){
+                    position_tree[game.ascii()] = [];
+                }
+                position_tree[game.ascii()].push([newPos.ascii(), moves[m].san, value, alpha, beta])
+                //viz
     
                 if (beta <= alpha){
+                    position_tree[game.ascii()].push(["beta <= alpha","break","NA",alpha,beta])
                     break;
                 }
-            }
-            if (depth == 3){
-                setInitialPosition([game.ascii(), bestVal]);
             }
 
             if (bestMove == null){
                 bestMove = moves[Math.floor(Math.random() * moves.length)]
             }
+
+            if (depth == cpudepth){
+                setInitialPosition([game.ascii(), bestMove.san, bestVal, alpha, beta]);
+            }
+
+            
 
             return [bestVal, bestMove];
         }
@@ -59,16 +67,10 @@ function VisualizeAlg(){
             let bestVal = Infinity;
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
+
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
-                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0] + Math.random() - 0.5;
-
-                // viz
-                if (!position_tree[game.ascii()]){
-                    position_tree[game.ascii()] = [];
-                }
-                position_tree[game.ascii()].push([newPos.ascii(), value])
-
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
                 
                 //viz
 
@@ -77,18 +79,26 @@ function VisualizeAlg(){
                     bestMove = moves[m]
                 }
                 beta = Math.min(beta, bestVal)
+
+                // viz
+                if (!position_tree[game.ascii()]){
+                    position_tree[game.ascii()] = [];
+                }
+                position_tree[game.ascii()].push([newPos.ascii(), moves[m].san, value, alpha, beta])
     
                 if (beta <= alpha){
+                    position_tree[game.ascii()].push(["beta <= alpha","NA","NA",alpha,beta])
                     break;
                 }
             }
-
-            if (depth == cpudepth){
-                setInitialPosition([game.ascii(), bestVal]);
-            }
+            
 
             if (bestMove == null){
                 bestMove = moves[Math.floor(Math.random() * moves.length)]
+            }
+
+            if (depth == cpudepth){
+                setInitialPosition([game.ascii(), bestMove.san, bestVal, alpha, beta]);
             }
 
             return [bestVal, bestMove];
@@ -101,7 +111,7 @@ function VisualizeAlg(){
     const userColor = "w";
 
     // set computer depth based on difficulty
-    let cpudepth = 3; // setting depth 3
+    let cpudepth = 4; // setting depth 3
 
     function makeMinimaxABMove(game, depth, white){
         if (!game.isGameOver()) {
@@ -113,9 +123,11 @@ function VisualizeAlg(){
 
     const timedMove = setTimeout(() => {
         if (chess.turn()!=userColor){
+            setThinking("Thinking...")
             makeMinimaxABMove(chess, cpudepth, chess.turn()=="w")
+            setThinking("")
         } 
-      }, 1000);
+      }, 100);
 
     useEffect(() => {
         if (!chess.isGameOver()){
@@ -175,6 +187,7 @@ function VisualizeAlg(){
     <div>
         <h1>Visualize Algorithm</h1>
         <h2>Minimax with Alpha-Beta Pruning </h2>
+        {thinking ? <h2>{thinking}</h2> : null}
         <Chessboard position={FEN} onPieceDrop={onDrop}/>
         {inProgress ? null 
         : 
