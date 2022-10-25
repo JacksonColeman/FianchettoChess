@@ -9,6 +9,8 @@ function UserVComputer({user, userColor, difficulty}){
     const [inProgress, setInProgress] = useState(true);
     const [winner, setWinner] = useState(null)
     const [submittedGame, setSubmittedGame] = useState(false)
+    const [guest, setGuest] = useState(user == null)
+    
 
     // user color as full string ("white/black")
     let userColorFull
@@ -17,12 +19,16 @@ function UserVComputer({user, userColor, difficulty}){
 
     if (userColor == "w"){
         userColorFull = "white"
+        if (!guest){
         whiteUserID = user.id;
         blackUserID = 999;
+        }
     } else if (userColor == "b"){
         userColorFull = "black"
+        if (!guest){
         blackUserID = user.id;
         whiteUserID = 999;
+        }
     }
 
     // set computer depth based on difficulty
@@ -160,11 +166,13 @@ function UserVComputer({user, userColor, difficulty}){
         : 
             <div>
                 <p>{gameOverMessage()}</p>
-                {submittedGame ? 
+                {guest ? 
+                null :
+                    submittedGame ? 
                     <p>Game Saved To Profile!</p>
                     :
                     <button onClick={saveGameClick}>Save Game To Profile</button>
-                } 
+                }
             </div>
                
         }

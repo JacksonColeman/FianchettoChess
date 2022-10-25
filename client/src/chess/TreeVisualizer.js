@@ -13,16 +13,22 @@ export default function TreeVisualizer({positionTree, initialPosition}){
         setShowChildren(!showChildren)
     }
 
+    if (positionTree == {}){
+        return (
+            <div></div>
+        )
+    }
+
     return (
         <div>
             <pre style={showChildren ? {color: "yellow"} : null}>{positionASCII}</pre>
             <p>Evaluation: {positionValue}</p>
             {hasChildren ? 
-                <button onClick={OnClickShowChildren}>Show Children</button>
+                <button onClick={OnClickShowChildren}>{showChildren ? "Hide Children" : "Show Children"}</button>
                 :
                 null
             }
-            {showChildren 
+            {(showChildren && children!=null)
             ? 
             <div style={{display: "flex"}}>
                 {children.map(child =>

@@ -15,7 +15,7 @@ export default function InitUserGame({user}){
     return(
         <div>
         {gameStart ? 
-        <div>
+        <div> 
             <UserVComputer user={user} userColor={userColor} difficulty={CPUDiff}/>
         </div>
         :

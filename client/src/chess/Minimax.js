@@ -50,19 +50,19 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
             
-            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
+            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0] + Math.random() - 0.5;
             if (value > bestVal){
                 bestVal = value;
                 bestMove = moves[m]
             }
             alpha = Math.max(alpha, bestVal)
 
-            debugger;
-
             if (beta <= alpha){
-                console.log(`beta (${beta}) <= alpha (${alpha})`)
                 break;
             }
+        }
+        if (bestMove == null){
+            bestMove = moves[Math.floor(Math.random() * moves.length)]
         }
         return [bestVal, bestMove];
     }
@@ -73,7 +73,7 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let moves = GENERATE_MOVES(game);
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
-            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
+            let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0] + Math.random() - 0.5;
             if (value < bestVal){
                 bestVal = value;
                 bestMove = moves[m]
@@ -81,10 +81,13 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
             beta = Math.min(beta, bestVal)
 
             if (beta <= alpha){
-                console.log(`beta (${beta}) <= alpha (${alpha})`)
                 break;
             }
         }
+        if (bestMove == null){
+            bestMove = moves[Math.floor(Math.random() * moves.length)]
+        }
+        console.log([bestVal, bestMove])
         return [bestVal, bestMove];
     }
 

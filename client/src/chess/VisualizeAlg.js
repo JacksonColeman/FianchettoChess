@@ -4,24 +4,18 @@ import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
 import TreeVisualizer from "./TreeVisualizer";
 
-function VisualizeAlg({user}){
+function VisualizeAlg(){
     const [chess, setChess] = useState(new Chess())
     const [FEN, setFEN] = useState(chess.fen())
     const [inProgress, setInProgress] = useState(true);
     const [winner, setWinner] = useState(null)
-    const [submittedGame, setSubmittedGame] = useState(false)
     
     const [initialPosition, setInitialPosition] = useState([]);
     const [position_tree, setPositionTree] = useState({});
 
     // ALG
 
-
-
     function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
-        // reset position tree upon new initial call
-
-
         if (depth == 0){   
             return [EVALUATE_POSITION(game), null]
         }
@@ -32,7 +26,7 @@ function VisualizeAlg({user}){
             let moves = GENERATE_MOVES(game);
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
-                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0] + Math.random() - 0.5;
 
                 if (!position_tree[game.ascii()]){
                     position_tree[game.ascii()] = [];
@@ -47,13 +41,17 @@ function VisualizeAlg({user}){
                 alpha = Math.max(alpha, bestVal)
     
                 if (beta <= alpha){
-                    console.log(`beta (${beta}) <= alpha (${alpha})`)
                     break;
                 }
             }
             if (depth == 3){
                 setInitialPosition([game.ascii(), bestVal]);
             }
+
+            if (bestMove == null){
+                bestMove = moves[Math.floor(Math.random() * moves.length)]
+            }
+
             return [bestVal, bestMove];
         }
     
@@ -63,7 +61,7 @@ function VisualizeAlg({user}){
             let moves = GENERATE_MOVES(game);
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
-                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
+                let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0] + Math.random() - 0.5;
 
                 // viz
                 if (!position_tree[game.ascii()]){
@@ -81,13 +79,16 @@ function VisualizeAlg({user}){
                 beta = Math.min(beta, bestVal)
     
                 if (beta <= alpha){
-                    console.log(`beta (${beta}) <= alpha (${alpha})`)
                     break;
                 }
             }
 
-            if (depth == 3){
+            if (depth == cpudepth){
                 setInitialPosition([game.ascii(), bestVal]);
+            }
+
+            if (bestMove == null){
+                bestMove = moves[Math.floor(Math.random() * moves.length)]
             }
 
             return [bestVal, bestMove];
@@ -95,30 +96,12 @@ function VisualizeAlg({user}){
     
     }
 
-
-
-
     // ALG
 
     const userColor = "w";
 
-    // user color as full string ("white/black")
-    let userColorFull
-    let whiteUserID;
-    let blackUserID;
-
-    if (userColor == "w"){
-        userColorFull = "white"
-        whiteUserID = user.id;
-        blackUserID = 999;
-    } else if (userColor == "b"){
-        userColorFull = "black"
-        blackUserID = user.id;
-        whiteUserID = 999;
-    }
-
     // set computer depth based on difficulty
-    let cpudepth = 3;
+    let cpudepth = 3; // setting depth 3
 
     function makeMinimaxABMove(game, depth, white){
         if (!game.isGameOver()) {
@@ -127,7 +110,6 @@ function VisualizeAlg({user}){
             setFEN(game.fen())
         }
     }
-
 
     const timedMove = setTimeout(() => {
         if (chess.turn()!=userColor){
@@ -160,6 +142,7 @@ function VisualizeAlg({user}){
 
             chess.move(move);
             setFEN(chess.fen())
+            setPositionTree({})
 
             if (chess.isCheckmate()){
                 setInProgress(false)
@@ -188,36 +171,11 @@ function VisualizeAlg({user}){
         }
     }
 
-
-    const saveGameClick = () => {
-        const game = {
-            white_user_id: whiteUserID,
-            black_user_id: blackUserID,
-            winner: winner,
-            pgn: chess.pgn()
-        }
-
-        // post
-        fetch('http://localhost:3000/games', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(game)
-        })
-        .then(res => res.json())
-        .then(console.log)
-
-        setSubmittedGame(true);
-    }
-        debugger;
-
   return(
     <div>
-        <h1>Play vs. Computer</h1>
-        <h2>Opponent: Computer </h2>
-        <Chessboard position={FEN} onPieceDrop={onDrop} boardOrientation={userColorFull}/>
-        {user ? <h2>Playing as: {user.username}</h2> : <h2>Playing as Guest</h2>}
+        <h1>Visualize Algorithm</h1>
+        <h2>Minimax with Alpha-Beta Pruning </h2>
+        <Chessboard position={FEN} onPieceDrop={onDrop}/>
         {inProgress ? null 
         : 
             <div>
@@ -225,8 +183,9 @@ function VisualizeAlg({user}){
             </div>
                
         }
-        <h1>ALGORITHM VISUALIZATION</h1>
+        <p>Play as white to see how the computer will respond as black</p>
         <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition}/>
+
     </div>
   )
 }
