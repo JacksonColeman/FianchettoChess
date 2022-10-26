@@ -160,7 +160,9 @@ function UserVComputer({user, userColor, difficulty}){
     <div>
         <h1>Play vs. Computer</h1>
         <h2>Opponent: Computer, Difficulty: {difficulty}</h2>
-        <Chessboard position={FEN} onPieceDrop={onDrop} boardOrientation={userColorFull}/>
+        <div className="board">
+            <Chessboard position={FEN} onPieceDrop={onDrop} boardOrientation={userColorFull}/>
+        </div>
         {user ? <h2>Playing as: {user.username}</h2> : <h2>Playing as Guest</h2>}
         {inProgress ? null 
         : 

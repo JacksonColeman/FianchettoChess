@@ -41,7 +41,7 @@ function App() {
 
         <Route path = '/about' element = {<AboutPage/>}/>
 
-        <Route path = '/' element = {<HomePage/>}/>
+        <Route path = '/' element = {<HomePage user={user}/>}/>
 
         <Route path = "/playvscomputer" element = {<InitUserGame user={user}/>}/>
 

@@ -60,7 +60,9 @@ function ComputerVRandom(){
   return(
     <div>
         <h1>Computer vs. Random</h1>
-        <Chessboard position={FEN}/>
+        <div className="board">
+            <Chessboard position={FEN}/>
+        </div>
         <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
         {inProgress ? null : <p>{gameOverMessage()}</p>}
         <p>In this demonstration, an intelligent chess computer is playing as the white pieces, while the

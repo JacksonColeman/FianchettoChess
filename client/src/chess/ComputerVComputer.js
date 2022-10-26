@@ -20,7 +20,7 @@ function ComputerVComputer(){
 
     const timedMinimaxMove = setTimeout(() => {
         if (PlayPause){
-            makeMinimaxMove(chess, 2, chess.turn()=="w")
+            makeMinimaxMove(chess, 3, chess.turn()=="w")
         }
       }, 1000);
 
@@ -51,7 +51,9 @@ function ComputerVComputer(){
   return(
     <div>
         <h1>Computer vs. Computer</h1>
-        <Chessboard position={FEN}/>
+        <div className="board">
+            <Chessboard position={FEN}/>
+        </div>
         <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
         {!inProgress ? <p>{gameOverMessage()}</p> : null}
         <p>Watch an intelligent chess computer face off against itself!</p>

@@ -28,6 +28,12 @@ function VisualizeAlg(){
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
 
+            // safeguard against drawn positions being evaluated as a win
+            if (moves == null){
+                console.log("no moves!")
+                return [EVALUATE_POSITION(game), null]
+            }
+
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
                 let value = MINIMAX_ALPHA_BETA(newPos, depth-1, false, alpha, beta)[0];
@@ -67,6 +73,12 @@ function VisualizeAlg(){
             let bestVal = Infinity;
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
+
+            // safeguard against drawn positions being evaluated as a win
+            if (moves == null){
+                console.log("no moves!")
+                return [EVALUATE_POSITION(game), null]
+            }
 
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
@@ -111,7 +123,7 @@ function VisualizeAlg(){
     const userColor = "w";
 
     // set computer depth based on difficulty
-    let cpudepth = 4; // setting depth 3
+    let cpudepth = 3; // setting depth 3
 
     function makeMinimaxABMove(game, depth, white){
         if (!game.isGameOver()) {
@@ -188,7 +200,9 @@ function VisualizeAlg(){
         <h1>Visualize Algorithm</h1>
         <h2>Minimax with Alpha-Beta Pruning </h2>
         {thinking ? <h2>{thinking}</h2> : null}
-        <Chessboard position={FEN} onPieceDrop={onDrop}/>
+        <div className="board">
+            <Chessboard className="board" position={FEN} onPieceDrop={onDrop}/>
+        </div>
         {inProgress ? null 
         : 
             <div>

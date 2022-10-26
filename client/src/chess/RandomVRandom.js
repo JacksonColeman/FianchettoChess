@@ -52,7 +52,9 @@ function RandomVRandom(){
     return (
         <div>
             <h1>Random vs. Random</h1>
-            <Chessboard position={FEN}/>
+            <div className="board">
+                <Chessboard position={FEN}/>
+            </div>
             <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
             {!inProgress ? <p>{gameOverMessage()}</p> : null}
             <p>

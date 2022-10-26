@@ -82,6 +82,12 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let bestMove = null;
         let moves = GENERATE_MOVES(game);
 
+        // safeguard against drawn positions being evaluated as a win
+        if (moves == null){
+            console.log("no moves!")
+            return [EVALUATE_POSITION(game), null]
+        }
+
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
             
@@ -106,6 +112,13 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let bestVal = Infinity;
         let bestMove = null;
         let moves = GENERATE_MOVES(game);
+
+        // safeguard against drawn positions being evaluated as a win
+        if (moves == null){
+            console.log("no moves!")
+            return [EVALUATE_POSITION(game), null]
+        }
+        
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
             let value = MINIMAX_ALPHA_BETA(newPos, depth-1, true, alpha, beta)[0];
@@ -136,7 +149,7 @@ export function GENERATE_MOVES(game){
 
 export function EVALUATE_POSITION(Game){
     // if game is over, assign +/- infinity
-    if (Game.isDraw()){
+    if (Game.isDraw() || Game.isStalemate() || Game.isThreefoldRepetition() || Game.isInsufficientMaterial()){
         return 0;
     } else if (Game.isCheckmate()){
         if (Game.turn() == "b"){

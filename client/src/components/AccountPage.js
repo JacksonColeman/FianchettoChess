@@ -32,7 +32,7 @@ export default function AccountPage({user, setUser}){
 
     return(
         <div><div>
-        <h3>Current user: {user ? user.username : "No User Signed In"} <button>edit username</button></h3>
+        <h3>Current user: {user ? user.username : "No User Signed In"}</h3>
         <h3>Elo: {user ? user.elo: "No User Signed In"}</h3>
         <Logout setUser={setUser}/>
         <button onClick={handleDeleteAccount}>Delete Account</button>
