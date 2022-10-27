@@ -1,17 +1,20 @@
 import { useState } from "react";
+import { Chessboard } from "react-chessboard";
 
-export default function TreeVisualizer({positionTree, initialPosition}){
+export default function TreeVisualizer({positionTree, initialPosition, head=false}){
 
+    let totalCalls = 0;
+    totalCalls++;
 
     const [showChildren, setShowChildren] = useState(false);
-    let positionASCII = initialPosition[0]
+    let positionFEN = initialPosition[0]
     let positionMove = initialPosition[1]
     let positionValue = initialPosition[2]
     let positionAlpha = initialPosition[3]
     let positionBeta = initialPosition[4]
 
-    const children = positionTree[positionASCII]
-    const hasChildren = positionTree[positionASCII]
+    const children = positionTree[positionFEN]
+    const hasChildren = positionTree[positionFEN]
 
     function OnClickShowChildren(){
         setShowChildren(!showChildren)
@@ -25,11 +28,15 @@ export default function TreeVisualizer({positionTree, initialPosition}){
 
     return (
         <div>
-        { positionASCII ?
-            <div className="tree-node">
-                <pre style={showChildren ? {color: "yellow"} : null}>{positionASCII}</pre>
-                <p>Move: {positionMove}</p>
-                <p>Evaluation: {Math.round(positionValue)}</p>
+        { positionFEN ?
+            <div className="tree-node" id={"node" + totalCalls}>
+                {/* <pre id={"pre" + initialPosition} style={showChildren ? {color: "yellow"} : null}>{positionFEN} </pre> */}
+                <div className="tiny-board">
+                    <Chessboard position={positionFEN} boardWidth="100"/>
+                </div>
+                <div className="position-info">
+                    <p>{head ? "Best " : ""}Move: {positionMove}</p>
+                    <p>Evaluation: {Math.round(positionValue)}</p>
                 {/* <p>ALPHA: {positionAlpha}</p>
                 <p>BETA: {positionBeta}</p> */}
                 {hasChildren ? 
@@ -37,11 +44,14 @@ export default function TreeVisualizer({positionTree, initialPosition}){
                     :
                     null
                 }
+                </div>
                 {(showChildren && children!=null)
                 ? 
                 <div className="viz-row">
                     {children.map(child =>
-                    <TreeVisualizer positionTree={positionTree} initialPosition={child}/>
+                    <div>
+                        <TreeVisualizer positionTree={positionTree} initialPosition={child}/>
+                    </div>
                     ) }
                 </div>
                 : 

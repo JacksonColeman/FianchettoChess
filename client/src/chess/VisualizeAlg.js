@@ -37,14 +37,14 @@ function VisualizeAlg(){
                 }
                 alpha = Math.max(alpha, bestVal)
 
-                if (!position_tree[game.ascii()]){
-                    position_tree[game.ascii()] = [];
+                if (!position_tree[game.fen()]){
+                    position_tree[game.fen()] = [];
                 }
-                position_tree[game.ascii()].push([newPos.ascii(), moves[m].san, value, alpha, beta])
+                position_tree[game.fen()].push([newPos.fen(), moves[m].san, value, alpha, beta])
                 //viz
     
                 if (beta <= alpha){
-                    position_tree[game.ascii()].push(["beta <= alpha","break","NA",alpha,beta])
+                    position_tree[game.fen()].push(["beta <= alpha","ALPHA >= BETA","NA",alpha,beta])
                     break;
                 }
             }
@@ -54,7 +54,7 @@ function VisualizeAlg(){
             }
 
             if (depth == cpudepth){
-                setInitialPosition([game.ascii(), bestMove.san, bestVal, alpha, beta]);
+                setInitialPosition([game.fen(), bestMove.san, bestVal, alpha, beta]);
             }
 
             
@@ -80,13 +80,13 @@ function VisualizeAlg(){
                 beta = Math.min(beta, bestVal)
 
                 // viz
-                if (!position_tree[game.ascii()]){
-                    position_tree[game.ascii()] = [];
+                if (!position_tree[game.fen()]){
+                    position_tree[game.fen()] = [];
                 }
-                position_tree[game.ascii()].push([newPos.ascii(), moves[m].san, value, alpha, beta])
+                position_tree[game.fen()].push([newPos.fen(), moves[m].san, value, alpha, beta])
     
                 if (beta <= alpha){
-                    position_tree[game.ascii()].push(["beta <= alpha","NA","NA",alpha,beta])
+                    position_tree[game.fen()].push(["NA","ALPHA >= BETA","NA",alpha,beta])
                     break;
                 }
             }
@@ -97,7 +97,7 @@ function VisualizeAlg(){
             }
 
             if (depth == cpudepth){
-                setInitialPosition([game.ascii(), bestMove.san, bestVal, alpha, beta]);
+                setInitialPosition([game.fen(), bestMove.san, bestVal, alpha, beta]);
             }
 
             return [bestVal, bestMove];
@@ -185,11 +185,13 @@ function VisualizeAlg(){
         <h1>Visualize AI Algorithm</h1>
         <h2>Minimax Algorithm with Alpha-Beta Pruning</h2>
         <p>Make a move as white to see how the computer decides what move to play</p>
-        <div className="viz-board">
-            <Chessboard className="board" position={FEN} onPieceDrop={onDrop}/>
+        <div className="viz-wrapper">
+            <div className="viz-board">
+                <Chessboard position={FEN} onPieceDrop={onDrop}/>
+            </div>
             <div className="tree">
-                <h2>Algorithm Visualizer</h2>
-                <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition}/>
+                <h2><u>Algorithm Visualizer</u></h2>
+                <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition} head={true}/>
             </div>
         </div>
         {inProgress ? null 

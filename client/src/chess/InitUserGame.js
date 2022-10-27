@@ -8,7 +8,7 @@ export default function InitUserGame({user}){
     const [CPUDiff, setCPUDiff] = useState("");
 
     const handleStartGame = () => {
-        if (userColor != "" && CPUDiff != ""){
+        if (userColor != "" && CPUDiff != "" && userColor != "default" && CPUDiff != "default"){
             setGameStart(!gameStart)
         }
     }

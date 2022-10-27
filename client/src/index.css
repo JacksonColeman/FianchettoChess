@@ -55,11 +55,18 @@ body{
 
 /* algorithm visualization */
 
-.viz-board {
+.viz-wrapper {
   display: flex;
   flex-direction: row;
   padding-left: 50px;
   padding-right: 50px;
+}
+.tiny-board {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: block;
 }
 
 .tree {
@@ -68,6 +75,7 @@ body{
   border-style: solid;
   width: 60%;
   display: inline-block;
+  overflow-y: scroll;
 }
 
 .viz-row {
@@ -77,8 +85,20 @@ body{
   border-style:dashed;
 }
 
-.tree-node button {
-  font-size: 12px;
+
+.tree-node{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.position-info p {
+  margin: 0;
+}
+
+.position-info button {
+  margin: 0;
+  font-size: 10px;
 }
 
 /* navbar */
@@ -196,4 +216,10 @@ button {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: whitesmoke;
   margin-top: 5px;
+}
+
+/* about page */
+.about-text {
+  margin-left:200px;
+  margin-right:200px;
 }
