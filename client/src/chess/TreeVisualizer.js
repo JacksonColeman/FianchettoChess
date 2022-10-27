@@ -33,13 +33,13 @@ export default function TreeVisualizer({positionTree, initialPosition}){
                 {/* <p>ALPHA: {positionAlpha}</p>
                 <p>BETA: {positionBeta}</p> */}
                 {hasChildren ? 
-                    <button onClick={OnClickShowChildren}>{showChildren ? "Hide Children" : "Show Children"}</button>
+                    <button onClick={OnClickShowChildren}>{showChildren ? "Hide Continuations" : "Show Continuations"}</button>
                     :
                     null
                 }
                 {(showChildren && children!=null)
                 ? 
-                <div style={{display: "flex"}}>
+                <div className="viz-row">
                     {children.map(child =>
                     <TreeVisualizer positionTree={positionTree} initialPosition={child}/>
                     ) }

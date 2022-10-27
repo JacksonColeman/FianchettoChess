@@ -53,6 +53,8 @@ body{
   margin-right: auto;
 }
 
+/* algorithm visualization */
+
 .viz-board {
   display: flex;
   flex-direction: row;
@@ -61,13 +63,22 @@ body{
 }
 
 .tree {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20px;
   font-size: 10px;
-  width:fit-content;
   border-style: solid;
-  width: 50%;
+  width: 60%;
   display: inline-block;
+}
+
+.viz-row {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  border-style:dashed;
+}
+
+.tree-node button {
+  font-size: 12px;
 }
 
 /* navbar */
@@ -105,6 +116,13 @@ body{
   font-size: 17px;
 }
 
+.navbar a.active {
+  color: pink;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
 
 
 .navbar a:hover {
