@@ -12,7 +12,7 @@ function Logout({setUser}) {
         .then(r => {
             if (r.ok){
                 setUser(null);
-                let path = "/login"
+                let path = "/"
                 navigate(path);
             }
         })

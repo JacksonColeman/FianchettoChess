@@ -6,6 +6,8 @@ import { useState } from "react";
 export default function GameSummary({game}){
     const [deletes, setDeletes] = useState(0);
 
+    console.log(game);
+
     let winner;
     if (game.winner == "w"){
         winner = game.white_user.username;
@@ -31,7 +33,7 @@ export default function GameSummary({game}){
         <div className="game-summary">
             <h4>{game.white_user.username} vs. {game.black_user.username} </h4>
             <h6> Winner: {winner} </h6>
-            {/* <button onClick={GameRecap}>Watch Recap</button> */}
+            <h6>Date: {game.created_at.slice(0,10)}</h6>
             <button onClick={handleDeleteGame}>Remove From Profile</button>
         </div>
         

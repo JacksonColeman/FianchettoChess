@@ -27,10 +27,11 @@ function App() {
         <Route path = '/login'
           element = {
           <div>
-            <CreateAccount/>
             <LoginForm setUser={setUser}/>
           </div>}
         />
+
+
 
         <Route path = '/account/*' element = {<AccountPage user={user} setUser={setUser}/>
         } />
@@ -48,8 +49,6 @@ function App() {
         <Route path = '/compvscomp' element = {<ComputerVComputer/>}/>
 
         <Route path = '/compvsrand' element = {<ComputerVRandom/>}/>
-
-        
 
         <Route path = '*' element = {<h1>404 not found</h1>}/>
         

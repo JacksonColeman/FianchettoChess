@@ -51,7 +51,7 @@ function LoginForm({setUser}) {
           </label>
           <label> Password: 
           <input 
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={e => setPassword(e.target.value)}

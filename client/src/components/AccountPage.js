@@ -31,13 +31,15 @@ export default function AccountPage({user, setUser}){
     }
 
     return(
-        <div><div>
-        <h3>Current user: {user ? user.username : "No User Signed In"}</h3>
-        <h3>Elo: {user ? user.elo: "No User Signed In"}</h3>
-        <Logout setUser={setUser}/>
-        <button onClick={handleDeleteAccount}>Delete Account</button>
-        {/* Rendering Games */}
-        <GamesContainer games={games}/>
-      </div></div>
+        <div>
+            <div className="account-wrapper">
+                <h3>Current user: {user ? user.username : "No User Signed In"}</h3>
+                <img src="https://i.imgur.com/Ag2ZKU7.png" height="110px" width="100px"/>
+                <Logout setUser={setUser}/>
+                <button onClick={handleDeleteAccount}>Delete Account</button>
+            </div>
+            {/* Rendering Games */}
+            <GamesContainer games={games}/>
+        </div>
     )
 }

@@ -52,15 +52,15 @@ function RandomVRandom(){
     return (
         <div>
             <h1>Random vs. Random</h1>
+            <p>
+                Watch the computer play against itself with both sides making totally random moves!
+                Play and pause the action using the button above.
+            </p>
             <div className="board">
                 <Chessboard position={FEN}/>
             </div>
             <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
             {!inProgress ? <p>{gameOverMessage()}</p> : null}
-            <p>
-                Watch the computer play against itself with both sides making totally random moves!
-                Play and pause the action using the button above.
-            </p>
         </div>
       )
 }

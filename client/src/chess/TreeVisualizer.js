@@ -24,14 +24,14 @@ export default function TreeVisualizer({positionTree, initialPosition}){
     }
 
     return (
-        <div className="wrapper">
+        <div>
         { positionASCII ?
-            <div>
+            <div className="tree-node">
                 <pre style={showChildren ? {color: "yellow"} : null}>{positionASCII}</pre>
                 <p>Move: {positionMove}</p>
-                <p>Evaluation: {positionValue}</p>
-                <p>ALPHA: {positionAlpha}</p>
-                <p>BETA: {positionBeta}</p>
+                <p>Evaluation: {Math.round(positionValue)}</p>
+                {/* <p>ALPHA: {positionAlpha}</p>
+                <p>BETA: {positionBeta}</p> */}
                 {hasChildren ? 
                     <button onClick={OnClickShowChildren}>{showChildren ? "Hide Children" : "Show Children"}</button>
                     :

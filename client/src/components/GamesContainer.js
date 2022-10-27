@@ -8,8 +8,10 @@ export default function GamesContainer({games}){
 
     return (
         <div>
-            <h2>Your Games:</h2>
+            <h2>Your Saved Games:</h2>
+            <div className="games-wrapper">
             {gameSummaries}
+            </div>
         </div>
     )
 }

@@ -16,7 +16,7 @@ export default function Navbar ({user}) {
             {/* <NavLink to="/signup"> Sign Up </NavLink> */}
             
             {user ? <NavLink to="/account"> Hi, {user.username} </NavLink> : 
-                <NavLink to="/login"> Login </NavLink>
+                <NavLink to="/login"> Hi, Guest </NavLink>
             }
             
         </div>

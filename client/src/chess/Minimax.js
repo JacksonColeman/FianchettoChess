@@ -73,7 +73,7 @@ export function MINIMAX(game, depth, white_turn){
 
 let totalCalls = 0;
 export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
-    if (depth == 0){   
+    if (depth == 0 || game.isGameOver()){   
         return [EVALUATE_POSITION(game), null]
     }
 
@@ -82,11 +82,6 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let bestMove = null;
         let moves = GENERATE_MOVES(game);
 
-        // safeguard against drawn positions being evaluated as a win
-        if (moves == null){
-            console.log("no moves!")
-            return [EVALUATE_POSITION(game), null]
-        }
 
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
@@ -112,12 +107,6 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
         let bestVal = Infinity;
         let bestMove = null;
         let moves = GENERATE_MOVES(game);
-
-        // safeguard against drawn positions being evaluated as a win
-        if (moves == null){
-            console.log("no moves!")
-            return [EVALUATE_POSITION(game), null]
-        }
         
         for (let m in moves){
             let newPos = UPDATE_POSITION(game, moves[m]);
@@ -224,7 +213,7 @@ export function EVALUATE_POSITION(Game){
         }
     }
 
-    let output = whiteScore - blackScore;
+    let output = whiteScore - blackScore + Math.random();
     return output;
 }
 

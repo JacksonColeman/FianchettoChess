@@ -1,3 +1,4 @@
+import { Select } from "@mui/material";
 import { useState } from "react";
 import UserVComputer from "./UserVComputer";
 
@@ -19,7 +20,7 @@ export default function InitUserGame({user}){
             <UserVComputer user={user} userColor={userColor} difficulty={CPUDiff}/>
         </div>
         :
-            <div>
+            <div className="setup-wrapper">
                 <h1>Game Setup</h1>
                 <select onChange={(e) => setUserColor(e.target.value)}>
                     <option value="default">Play as White or Black?</option>
@@ -28,9 +29,9 @@ export default function InitUserGame({user}){
                 </select>
                 <select onChange={(e) => setCPUDiff(e.target.value)}>
                     <option value="default">Select Computer Difficulty</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
                 </select>
                 <button onClick={handleStartGame}>Start Game!</button>
                 <p>

@@ -1,4 +1,4 @@
-import { MINIMAX } from "./Minimax";
+import { MINIMAX_ALPHA_BETA} from "./Minimax";
 import {Chess} from "chess.js";
 import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
@@ -9,24 +9,23 @@ function ComputerVComputer(){
     const [PlayPause, setPlayPause] = useState(false);
     const [inProgress, setInProgress] = useState(true);
 
-    function makeMinimaxMove(game, depth, white){
+    function makeMinimaxABMove(game, depth, white){
         if (!game.isGameOver()) {
-            const minimaxMove = MINIMAX(game, depth, white)[1];
-            console.log(minimaxMove)
-            game.move(minimaxMove)
+            const minimaxABMove = MINIMAX_ALPHA_BETA(game, depth, white, -Infinity, Infinity)[1];
+            game.move(minimaxABMove)
             setFEN(game.fen())
         }
     }
 
-    const timedMinimaxMove = setTimeout(() => {
+    const timedMinimaxABMove = setTimeout(() => {
         if (PlayPause){
-            makeMinimaxMove(chess, 3, chess.turn()=="w")
+            makeMinimaxABMove(chess, 3, chess.turn()=="w")
         }
       }, 1000);
 
     useEffect(() => {
         if (!chess.isGameOver()){
-            return () => timedMinimaxMove
+            return () => timedMinimaxABMove
         } else {
             setInProgress(false);
         }
@@ -50,13 +49,13 @@ function ComputerVComputer(){
 
   return(
     <div>
-        <h1>Computer vs. Computer</h1>
+        <h1>AI vs. AI</h1>
+        <p>Watch an intelligent chess AI face off against itself!</p>
         <div className="board">
             <Chessboard position={FEN}/>
         </div>
         <button onClick={handlePlayPauseClick}>{PlayPause ? "Pause" : "Play"}</button>
         {!inProgress ? <p>{gameOverMessage()}</p> : null}
-        <p>Watch an intelligent chess computer face off against itself!</p>
     </div>
   )
 }

@@ -12,27 +12,20 @@ function VisualizeAlg(){
     
     const [initialPosition, setInitialPosition] = useState([]);
     const [position_tree, setPositionTree] = useState({});
-    const [thinking, setThinking] = useState("");
 
     const mc = MOVE_COMPARE;
 
     // ALG
 
     function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta){
-        if (depth == 0){   
-            return [EVALUATE_POSITION(game), null]
+        if (depth == 0 || game.isGameOver()){   
+            return [EVALUATE_POSITION(game), null] 
         }
     
         else if (white_turn){
             let bestVal = -Infinity;
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
-
-            // safeguard against drawn positions being evaluated as a win
-            if (moves == null){
-                console.log("no moves!")
-                return [EVALUATE_POSITION(game), null]
-            }
 
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
@@ -73,12 +66,6 @@ function VisualizeAlg(){
             let bestVal = Infinity;
             let bestMove = null;
             let moves = GENERATE_MOVES(game);
-
-            // safeguard against drawn positions being evaluated as a win
-            if (moves == null){
-                console.log("no moves!")
-                return [EVALUATE_POSITION(game), null]
-            }
 
             for (let m in moves){
                 let newPos = UPDATE_POSITION(game, moves[m]);
@@ -135,9 +122,7 @@ function VisualizeAlg(){
 
     const timedMove = setTimeout(() => {
         if (chess.turn()!=userColor){
-            setThinking("Thinking...")
             makeMinimaxABMove(chess, cpudepth, chess.turn()=="w")
-            setThinking("")
         } 
       }, 100);
 
@@ -197,11 +182,15 @@ function VisualizeAlg(){
 
   return(
     <div>
-        <h1>Visualize Algorithm</h1>
-        <h2>Minimax with Alpha-Beta Pruning </h2>
-        {thinking ? <h2>{thinking}</h2> : null}
-        <div className="board">
+        <h1>Visualize AI Algorithm</h1>
+        <h2>Minimax Algorithm with Alpha-Beta Pruning</h2>
+        <p>Make a move as white to see how the computer decides what move to play</p>
+        <div className="viz-board">
             <Chessboard className="board" position={FEN} onPieceDrop={onDrop}/>
+            <div className="tree">
+                <h2>Algorithm Visualizer</h2>
+                <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition}/>
+            </div>
         </div>
         {inProgress ? null 
         : 
@@ -210,8 +199,8 @@ function VisualizeAlg(){
             </div>
                
         }
-        <p>Play as white to see how the computer will respond as black</p>
-        <TreeVisualizer positionTree={position_tree} initialPosition={initialPosition}/>
+        
+        
 
     </div>
   )

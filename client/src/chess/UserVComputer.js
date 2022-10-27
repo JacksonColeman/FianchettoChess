@@ -34,13 +34,13 @@ function UserVComputer({user, userColor, difficulty}){
     // set computer depth based on difficulty
     let cpudepth;
     switch(difficulty){
-        case "easy":
+        case "Easy":
             cpudepth = 2;
             break;
-        case "medium":
+        case "Medium":
             cpudepth = 3;
             break;
-        case "hard":
+        case "Hard":
             cpudepth = 4;
             break;
     }
@@ -159,7 +159,7 @@ function UserVComputer({user, userColor, difficulty}){
   return(
     <div>
         <h1>Play vs. Computer</h1>
-        <h2>Opponent: Computer, Difficulty: {difficulty}</h2>
+        <h2>Opponent: AI, Difficulty: {difficulty}</h2>
         <div className="board">
             <Chessboard position={FEN} onPieceDrop={onDrop} boardOrientation={userColorFull}/>
         </div>
