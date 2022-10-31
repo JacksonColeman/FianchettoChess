@@ -126,7 +126,7 @@ body{
   font-size: 17px;
 }
 
-.navbar a.main {
+.navbar a.main.active{
   float: left;
   display: block;
   color: pink;
@@ -134,14 +134,12 @@ body{
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  background-color: #333;
 }
 
 .navbar a.active {
-  color: pink;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  background-color: #ddd;
+  color: black;
 }
 
 

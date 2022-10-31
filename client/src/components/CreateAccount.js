@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function CreateAccount() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+
+    let navigate = useNavigate();
 
     const submitCreateAccount = (e) => {
       e.preventDefault();
@@ -20,6 +23,7 @@ function CreateAccount() {
         })
         .then(res => res.json())
         .then(console.log)
+        .then(navigate('/login'))
     }
 
     return (
