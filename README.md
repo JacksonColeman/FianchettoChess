@@ -1,5 +1,4 @@
-#
-Fianchetto Chess
+#Fianchetto Chess
 
 I made Fianchetto Chess as my final project for the Flatiron School Software Engineering Bootcamp.
 It is a chess app with a fully functional and skilled Chess AI that you can play against, as well as other modes such as 
