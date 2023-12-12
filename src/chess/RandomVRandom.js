@@ -3,12 +3,11 @@ import { Chessboard } from "react-chessboard";
 import { useEffect, useState } from "react";
 
 function RandomVRandom() {
+  const [chess, setChess] = useState(new Chess());
   const [FEN, setFEN] = useState(chess.fen());
   const [PlayPause, setPlayPause] = useState(false);
   const [inProgress, setInProgress] = useState(true);
   const [winner, setWinner] = useState(null);
-
-  const chess = new Chess();
 
   // random game code from chess.js readme
   function randomMove() {
