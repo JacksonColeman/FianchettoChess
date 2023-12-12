@@ -9,7 +9,7 @@ function ComputerVRandom() {
   const [inProgress, setInProgress] = useState(true);
   const [winner, setWinner] = useState(null);
 
-  const chess = newChess();
+  const chess = new Chess();
 
   function makeMinimaxABMove(game, depth, white) {
     if (!game.isGameOver()) {
