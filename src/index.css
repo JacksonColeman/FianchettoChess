@@ -1,25 +1,26 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 /* jackson's additions */
 
 /* home */
 
-body{
+body {
   background-color: #5c5752;
   color: white;
   text-align: center;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .home-buttons {
@@ -30,12 +31,11 @@ body{
   margin-left: 20px;
   margin-right: 20px;
   font-size: 18px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-color: whitesmoke;
   margin-top: 0px;
-
 }
-
 
 .home img {
   width: 40%;
@@ -60,6 +60,7 @@ body{
   flex-direction: row;
   padding-left: 50px;
   padding-right: 50px;
+  margin-bottom: 50px;
 }
 .tiny-board {
   margin-left: auto;
@@ -82,11 +83,10 @@ body{
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  border-style:dashed;
+  border-style: dashed;
 }
 
-
-.tree-node{
+.tree-node {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -103,18 +103,10 @@ body{
 
 /* navbar */
 
-.AccountCreation{
-  flex: 1;
-  flexDirection: "column";
-  justifyContent: "center";
-  alignItems: "center";
-}
-
-.navbar{
+.navbar {
   background-color: #333;
   overflow: hidden;
 }
-
 
 .navbar a {
   float: left;
@@ -126,7 +118,7 @@ body{
   font-size: 17px;
 }
 
-.navbar a.main.active{
+.navbar a.main.active {
   float: left;
   display: block;
   color: pink;
@@ -142,7 +134,6 @@ body{
   color: black;
 }
 
-
 .navbar a:hover {
   background-color: #ddd;
   color: black;
@@ -152,21 +143,21 @@ body{
 /* game init */
 
 .setup-wrapper {
-  border-style:solid;
+  border-style: solid;
   margin-top: 100px;
-  margin-left:auto;
+  margin-left: auto;
   margin-right: auto;
   max-width: 50%;
   max-height: 50%;
 }
-select { 
- width: 300px;
- display: block;
- text-align: center;
- margin-left: auto;
- margin-right: auto;
- margin-top: 20px;
- font-size: 18px;
+select {
+  width: 300px;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 18px;
 }
 
 .setup-wrapper button {
@@ -177,7 +168,7 @@ select {
 /* profile */
 
 .games-wrapper {
-  display:flex;
+  display: flex;
   width: 1000px;
   padding-top: 20px;
   padding-left: 5%;
@@ -189,8 +180,8 @@ select {
   border-width: 2px;
   border-color: white;
   padding: 10px;
-  margin-right:20px;
-  margin-left:20px;
+  margin-right: 20px;
+  margin-left: 20px;
   background-color: #7e7974;
 }
 
@@ -199,7 +190,7 @@ select {
   border-width: 2px;
   border-color: white;
   max-width: 20%;
-  margin-left:auto;
+  margin-left: auto;
   margin-right: auto;
   margin-top: 2%;
   padding-bottom: 10px;
@@ -211,13 +202,14 @@ button {
   margin-left: 20px;
   margin-right: 20px;
   font-size: 18px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-color: whitesmoke;
   margin-top: 5px;
 }
 
 /* about page */
 .about-text {
-  margin-left:200px;
-  margin-right:200px;
+  margin-left: 200px;
+  margin-right: 200px;
 }

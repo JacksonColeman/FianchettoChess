@@ -240,20 +240,20 @@ export function MINIMAX(game, depth, white_turn) {
 
 let totalCalls = 0;
 export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta) {
-  if (depth == 0 || game.isGameOver()) {
+  if (depth === 0 || game.isGameOver()) {
     return [EVALUATE_POSITION(game), null];
   } else if (white_turn) {
     let bestVal = -Infinity;
     let bestMove = null;
     let moves = GENERATE_MOVES(game);
 
-    for (let m in moves) {
-      let newPos = UPDATE_POSITION(game, moves[m]);
+    for (let move of moves) {
+      let newPos = UPDATE_POSITION(game, move);
 
       let value = MINIMAX_ALPHA_BETA(newPos, depth - 1, false, alpha, beta)[0];
       if (value > bestVal) {
         bestVal = value;
-        bestMove = moves[m];
+        bestMove = move;
       }
       alpha = Math.max(alpha, bestVal);
 
@@ -261,21 +261,23 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta) {
         break;
       }
     }
-    if (bestMove == null) {
+
+    if (bestMove === null) {
       bestMove = moves[Math.floor(Math.random() * moves.length)];
     }
+
     return [bestVal, bestMove];
-  } else if (white_turn == false) {
+  } else {
     let bestVal = Infinity;
     let bestMove = null;
     let moves = GENERATE_MOVES(game);
 
-    for (let m in moves) {
-      let newPos = UPDATE_POSITION(game, moves[m]);
+    for (let move of moves) {
+      let newPos = UPDATE_POSITION(game, move);
       let value = MINIMAX_ALPHA_BETA(newPos, depth - 1, true, alpha, beta)[0];
       if (value < bestVal) {
         bestVal = value;
-        bestMove = moves[m];
+        bestMove = move;
       }
       beta = Math.min(beta, bestVal);
 
@@ -283,9 +285,11 @@ export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta) {
         break;
       }
     }
-    if (bestMove == null) {
+
+    if (bestMove === null) {
       bestMove = moves[Math.floor(Math.random() * moves.length)];
     }
+
     return [bestVal, bestMove];
   }
 }
@@ -298,7 +302,6 @@ export function GENERATE_MOVES(game) {
 }
 
 export function EVALUATE_POSITION(Game) {
-  console.log(Game);
   // if game is over, assign +/- infinity
   if (
     Game.isDraw() ||
@@ -413,4 +416,14 @@ export function MOVE_COMPARE(a, b) {
     pieceValue[b.piece] -
     (pieceValue[a.captured] - pieceValue[a.piece])
   );
+}
+
+function containsCastlingMove(arrayOfStrings) {
+  const foundMove = arrayOfStrings.some(
+    (move) => move.includes("O-O-O") || move.includes("O-O")
+  );
+  if (foundMove) {
+    console.log("found castling move!");
+  }
+  return foundMove;
 }

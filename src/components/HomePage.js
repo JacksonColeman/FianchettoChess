@@ -14,6 +14,9 @@ export default function HomePage({ user }) {
           <button onClick={() => navigate("/playvscomputer")}>
             Play a Game Against the AI
           </button>
+          <button onClick={() => navigate("/visualize")}>
+            Visualize the Algorithm
+          </button>
         </div>
       )}
     </div>
