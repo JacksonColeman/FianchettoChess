@@ -13,8 +13,8 @@ export default function TreeVisualizer({
   let positionFEN = initialPosition[0];
   let positionMove = initialPosition[1];
   let positionValue = initialPosition[2];
-  let positionAlpha = initialPosition[3];
-  let positionBeta = initialPosition[4];
+  // let positionAlpha = initialPosition[3];
+  // let positionBeta = initialPosition[4];
 
   const children = positionTree[positionFEN];
   const hasChildren = positionTree[positionFEN];

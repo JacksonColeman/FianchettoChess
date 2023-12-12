@@ -216,7 +216,7 @@ export function MINIMAX(game, depth, white_turn) {
   let moveValues = [];
   for (let m in moves) {
     let newPos = UPDATE_POSITION(game, moves[m]);
-    if (depth == 1) {
+    if (depth === 1) {
       moveValues[m] = EVALUATE_POSITION(newPos) + Math.random() - 0.5;
     } else {
       moveValues[m] = MINIMAX(newPos, depth - 1, !white_turn)[0];
@@ -224,7 +224,7 @@ export function MINIMAX(game, depth, white_turn) {
   }
 
   let bestVal;
-  if (white_turn == true) {
+  if (white_turn === true) {
     bestVal = Math.max(...moveValues);
   } else {
     bestVal = Math.min(...moveValues);
@@ -238,7 +238,7 @@ export function MINIMAX(game, depth, white_turn) {
   return output;
 }
 
-let totalCalls = 0;
+// let totalCalls = 0;
 export function MINIMAX_ALPHA_BETA(game, depth, white_turn, alpha, beta) {
   if (depth === 0 || game.isGameOver()) {
     return [EVALUATE_POSITION(game), null];
@@ -311,7 +311,7 @@ export function EVALUATE_POSITION(Game) {
   ) {
     return 0;
   } else if (Game.isCheckmate()) {
-    if (Game.turn() == "b") {
+    if (Game.turn() === "b") {
       return Infinity;
     } else {
       return -Infinity;
@@ -327,13 +327,13 @@ export function EVALUATE_POSITION(Game) {
   for (let rank in board) {
     for (let square in board[rank]) {
       let piece = board[rank][square];
-      if (piece == null) {
+      if (piece === null) {
         continue;
       }
       piece.visited = true;
       totalPieces++;
       // get piece value
-      const pVal = pieceValue[piece.type];
+      // const pVal = pieceValue[piece.type];
       let totalVal = 0;
 
       // add "vision" score
@@ -351,7 +351,7 @@ export function EVALUATE_POSITION(Game) {
           totalVal += 100;
           totalVal += 2;
           let progression;
-          if (piece.color == "w") {
+          if (piece.color === "w") {
             progression = piece.square[1] - 2;
           } else {
             progression = 7 - piece.square[1];
@@ -370,14 +370,16 @@ export function EVALUATE_POSITION(Game) {
         case "k":
           totalVal += 20000;
           break;
+        default:
+          break;
       }
 
       // for bishops
 
       // assign to correct side
-      if (piece.color == "w") {
+      if (piece.color === "w") {
         whiteScore += totalVal;
-      } else if (piece.color == "b") {
+      } else if (piece.color === "b") {
         blackScore += totalVal;
       }
     }
@@ -394,14 +396,14 @@ export function UPDATE_POSITION(game, move) {
 }
 
 // move sorting
-const MOVE_PRIORITY = {
-  p: 1,
-  n: 2,
-  b: 3,
-  r: 4,
-  q: 5,
-  k: 6,
-};
+// const MOVE_PRIORITY = {
+//   p: 1,
+//   n: 2,
+//   b: 3,
+//   r: 4,
+//   q: 5,
+//   k: 6,
+// };
 export function MOVE_COMPARE(a, b) {
   if (!a.captured) {
     return -1;
@@ -418,12 +420,12 @@ export function MOVE_COMPARE(a, b) {
   );
 }
 
-function containsCastlingMove(arrayOfStrings) {
-  const foundMove = arrayOfStrings.some(
-    (move) => move.includes("O-O-O") || move.includes("O-O")
-  );
-  if (foundMove) {
-    console.log("found castling move!");
-  }
-  return foundMove;
-}
+// function containsCastlingMove(arrayOfStrings) {
+//   const foundMove = arrayOfStrings.some(
+//     (move) => move.includes("O-O-O") || move.includes("O-O")
+//   );
+//   if (foundMove) {
+//     console.log("found castling move!");
+//   }
+//   return foundMove;
+// }

@@ -13,8 +13,8 @@ function UserVComputer({ user, userColor, difficulty }) {
 
   // user color as full string ("white/black")
   let userColorFull;
-  let whiteUserID;
-  let blackUserID;
+  // let whiteUserID;
+  // let blackUserID;
 
   if (userColor == "w") {
     userColorFull = "white";

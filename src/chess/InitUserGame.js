@@ -1,4 +1,3 @@
-import { Select } from "@mui/material";
 import { useState } from "react";
 import UserVComputer from "./UserVComputer";
 
@@ -9,10 +8,10 @@ export default function InitUserGame({ user }) {
 
   const handleStartGame = () => {
     if (
-      userColor != "" &&
-      CPUDiff != "" &&
-      userColor != "default" &&
-      CPUDiff != "default"
+      userColor !== "" &&
+      CPUDiff !== "" &&
+      userColor !== "default" &&
+      CPUDiff !== "default"
     ) {
       setGameStart(!gameStart);
     }
