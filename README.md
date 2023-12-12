@@ -10,4 +10,4 @@ The part of the app that I am most proud of is the AI Algorithm Visualizer, wher
 
 Building this app was a great experience learning how chess computers work, and it is a project that I believe could always be improved and one that I plan to continue working on.
 
-It is not currently available to the public, but you can watch a demo here: TBD
+Access the site [here](https://fianchetto-chess.netlify.app/)
